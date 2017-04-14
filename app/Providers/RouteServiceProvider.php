@@ -39,7 +39,70 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapClientRoutes();
+
+        $this->mapAgencyRoutes();
+
+        $this->mapAdminRoutes();
+
         //
+    }
+
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::group([
+            'middleware' => ['web', 'admin', 'auth:admin'],
+            'prefix' => 'admin',
+            'as' => 'admin.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/admin.php');
+        });
+    }
+
+    /**
+     * Define the "agency" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAgencyRoutes()
+    {
+        Route::group([
+            'middleware' => ['web', 'agency', 'auth:agency'],
+            'prefix' => 'agency',
+            'as' => 'agency.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/agency.php');
+        });
+    }
+
+    /**
+     * Define the "client" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapClientRoutes()
+    {
+        Route::group([
+            'middleware' => ['web', 'client', 'auth:client'],
+            'prefix' => 'client',
+            'as' => 'client.',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/client.php');
+        });
     }
 
     /**
