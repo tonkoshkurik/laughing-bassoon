@@ -16,7 +16,10 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function() {
-  return dd(Auth::guard());
+  // return dd(Auth::guard());
+  if (Auth::guard('agency')->check()) {
+      return redirect('agency/home');
+  }
 })->name('login');
 
 Route::group(['prefix' => 'admin'], function () {
